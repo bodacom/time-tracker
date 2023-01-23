@@ -1,3 +1,6 @@
+# try-except for os.popen().read()
+# context manager for data saving to save the buffer in case of script fault
+
 import time
 import os
 import re
