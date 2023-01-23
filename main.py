@@ -22,7 +22,9 @@ def save_to_file(file: str, data: str):
 # getwindowfocus == getactivewindow
 # 'xdotool getwindowfocus getwindowname getactivewindow getmouselocation'
 
-XDO_COMMAND = 'xdotool getactivewindow getwindowname getmouselocation '
+XDO_COMMANDS = ['xdotool', 'getactivewindow', 'getwindowname', 'getmouselocation',]
+XDO_COMMAND = ' '.join(XDO_COMMANDS)
+print(XDO_COMMAND)
 data = ''
 FILE_NAME = 'tracker_log_1.txt'
 MEASUREMENT_ACCURACY = 2 # measurement accuracy in seconds
