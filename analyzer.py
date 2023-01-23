@@ -20,10 +20,11 @@ def read_log(log_file_name: str = 'tracker_log.txt') -> list:
     File format.
     One entity consists of three lines like the next:
 
-     "1665761850.8328192                            (contains time stamp)
-      main.py - beetroot - Visual Studio Code       (contains the window name)
+     "1665761850.8328192                            (contains unix time stamp)
+      main.py - beetroot - Visual Studio Code       (contains the window and the task name)
       x:1191 y:1051 screen:0 window:115343363"      (contains coursore coordinates x and y, screen number, window id)
-                                                    (contains \\n as an entity separator)
+                                                    (contains empty line as an entity separator)
+      -- // --
     '''
     
     with open(log_file_name, 'r') as log_file:
@@ -90,6 +91,7 @@ def sorted_frequency_dictionary(entities: list, reversed: bool = True) -> dict:
     '''
     Sorts names by times of appearance.
     Returns a dictionary of unique names as keys and frequency as values
+    
     '''
     frequency_dictionary = {}
     # define names frequency:
