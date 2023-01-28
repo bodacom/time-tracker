@@ -19,32 +19,38 @@ def save_to_file(file: str, data: str):
         return False
 
 
-# getwindowfocus == getactivewindow
-# 'xdotool getwindowfocus getwindowname getactivewindow getmouselocation'
+def track():
 
-XDO_COMMANDS = ['xdotool', 'getactivewindow', 'getwindowname', 'getmouselocation',]
-XDO_COMMAND = ' '.join(XDO_COMMANDS)
-print(XDO_COMMAND)
-data = ''
-FILE_NAME = 'tracker_log_1.txt'
-MEASUREMENT_ACCURACY = 2 # measurement accuracy in seconds
-measurement_delay = MEASUREMENT_ACCURACY / 2
+    # getwindowfocus == getactivewindow
+    # 'xdotool getwindowfocus getwindowname getactivewindow getmouselocation'
 
-while True:
+    XDO_COMMANDS = ['xdotool', 'getactivewindow', 'getwindowname', 'getmouselocation',]
+    XDO_COMMAND = ' '.join(XDO_COMMANDS)
+    print(XDO_COMMAND)
+    data = ''
+    FILE_NAME = 'tracker_log_1.txt'
+    MEASUREMENT_ACCURACY = 2 # measurement accuracy in seconds
+    measurement_delay = MEASUREMENT_ACCURACY / 2
 
-    # get activity details and time stamp
-    activity_details = os.popen(XDO_COMMAND).read()
-    time_stamp = time.time()
+    while True:
 
-    # form an activity frame
-    activity_frame = f'{str(time_stamp)}\n{activity_details}\n' #str(time_stamp)+ '\n' + activity_details + '\n'
-    
-    # form a data buffer variable
-    data = data + activity_frame
-    
-    # save current data to file. Clean buffer is saved to file successfuly
-    if save_to_file(FILE_NAME, data):
-        data = ''
+        # get activity details and time stamp
+        activity_details = os.popen(XDO_COMMAND).read()
+        time_stamp = time.time()
 
-    # add delay to save resources with acceptable accuracy
-    time.sleep(measurement_delay)
+        # form an activity frame
+        activity_frame = f'{str(time_stamp)}\n{activity_details}\n' #str(time_stamp)+ '\n' + activity_details + '\n'
+        
+        # form a data buffer variable
+        data = data + activity_frame
+        
+        # save current data to file. Clean buffer is saved to file successfuly
+        if save_to_file(FILE_NAME, data):
+            data = ''
+
+        # add delay to save resources with acceptable accuracy
+        time.sleep(measurement_delay)
+
+
+if __name__ == '__main__':
+    track()
