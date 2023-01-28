@@ -220,8 +220,8 @@ def active_logged_intervals(entities: list, gap: float, sleep: float) -> list:
 
 if __name__ == '__main__':
 
-    fine_name = input('Enter log file name: (d=default) ')
-    lines = read_log(fine_name)
+    file_name = input('Enter log file name: (d=default) ')
+    lines = read_log(file_name)
     
     log_entities = make_entities(lines)
     print('Number of log entities:',len(log_entities))
