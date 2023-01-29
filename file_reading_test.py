@@ -1,5 +1,6 @@
 import analyzer
 import time
+import pprint
 
 def check_log(log_file_name: str = 'tracker_log.txt') -> list:
     '''
@@ -17,14 +18,12 @@ def check_log(log_file_name: str = 'tracker_log.txt') -> list:
     '''
     
     with open(log_file_name, 'r') as log_file:
-        previous_line = str()
-        last_line =str()
+        counter = 0
         for line in log_file:
-            previous_line = last_line
-            last_line = line 
-            if line == "afdsgnsdfhsd\n":
-                print('Here we are')
-        print(previous_line)
+            counter += 1
+            if counter == 16152864:
+                print("Found")
+        print("Number of lines = ", counter)
 
 
 def seek_log(log_file_name: str = 'tracker_log.txt') -> list:
@@ -100,5 +99,6 @@ if __name__ == '__main__':
 
     # read_all_file(1,0)
 
-    seek_file(3,1)
+    # seek_file(3,1)
 
+    check_through_file(1,0)
