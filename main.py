@@ -1,3 +1,6 @@
+import tracker
+
+
 
 def create_project(projects: list) -> str:
     while True:
@@ -29,4 +32,5 @@ def create_project(projects: list) -> str:
 #     pass
 
 
-
+while True:
+    timestamp, activity_details = tracker.light_tracker()
