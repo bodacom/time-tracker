@@ -52,5 +52,17 @@ def track():
         time.sleep(measurement_delay)
 
 
+def light_tracker():
+    
+    XDO_COMMANDS = ['xdotool', 'getactivewindow', 'getwindowname', 'getmouselocation',]
+    XDO_COMMAND = ' '.join(XDO_COMMANDS)
+    
+    activity_details = os.popen(XDO_COMMAND).read()
+    time_stamp = time.time()
+
+    return time_stamp, activity_details
+
+
+
 if __name__ == '__main__':
     track()
