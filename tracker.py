@@ -34,21 +34,16 @@ def track():
 
     while True:
 
-        # get activity details and time stamp
         activity_details = os.popen(XDO_COMMAND).read()
         time_stamp = time.time()
 
-        # form an activity frame
-        activity_frame = f'{str(time_stamp)}\n{activity_details}\n' #str(time_stamp)+ '\n' + activity_details + '\n'
+        activity_frame = f'{str(time_stamp)}\n{activity_details}\n'
         
-        # form a data buffer variable
         data = data + activity_frame
         
-        # save current data to file. Clean buffer is saved to file successfuly
         if save_to_file(FILE_NAME, data):
             data = ''
 
-        # add delay to save resources with acceptable accuracy
         time.sleep(measurement_delay)
 
 
