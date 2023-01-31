@@ -15,7 +15,7 @@ def main():
     first_time = True
     text_to_print = '00:00:00'
     text_display = canvas.create_text(20, 20, text=text_to_print, font=('Helvetica',14),\
-                           fill='green',state='hidden', anchor=tk.NW)
+                           fill='green',state='normal', anchor=tk.NW)
     list_to_display = ''
     list_display = None
 
@@ -23,53 +23,65 @@ def main():
         
         os.system('clear')
         activity_name = os.popen('xdotool getactivewindow getwindowname').read().rstrip()
+
         if first_time:
             previous_activity = activity_name
+
         if activity_name == previous_activity:
             counter += 1
             seconds = counter % 60
             minutes = counter // 60
             hours = minutes // 60
             minutes = minutes % 60
-        else:
             if session_activities.get(previous_activity):
                 activity_time = session_activities[previous_activity]
-                activity_time += counter
+                activity_time += 1
                 session_activities[previous_activity] = activity_time
             else:
-                session_activities[previous_activity] = counter
+                session_activities[previous_activity] = 1
+
+        else:
+            
             counter = 1
             seconds = 1
             minutes = 0
             hours = 0
-        if not first_time:
-            text_to_print = f'{hours:02}:{minutes:02}:{seconds:02}   {activity_name}'
-            print('\n', text_to_print, end='\n\n')
-            canvas.itemconfig(text_display, state='hidden')
-            del(text_display)
-            text_display = canvas.create_text(20, 20, text=text_to_print, font=('Helvetica',14),\
-                           fill='green',state='normal', anchor=tk.NW)
 
-            i = 0
-            a = dict(sorted(session_activities.items(), key=lambda item: item[1], reverse=True))
-            list_to_display = ''
-            for activity, activity_time in a.items():
-                seconds = activity_time % 60
-                minutes = activity_time // 60
-                hours = minutes // 60
-                minutes = minutes % 60
-                list_to_display = list_to_display + f'{hours:02}:{minutes:02}:{seconds:02}   {activity}\n'
-                i += 1
-                if i == 9:
-                    break
-            canvas.itemconfig(list_display, state='hidden')
-            del(list_display)
-            list_display = canvas.create_text(20, 60, text=list_to_display, font=('Helvetica',14),\
-                           fill='black',state='normal', anchor=tk.NW)
-            i = 0
-        else:
+            if session_activities.get(activity_name):
+                activity_time = session_activities[activity_name]
+                activity_time += 1
+                session_activities[activity_name] = activity_time
+            else:
+                session_activities[activity_name] = 1
+        
+        text_to_print = f'{hours:02}:{minutes:02}:{seconds:02}   {activity_name}'
+        print('\n', text_to_print, end='\n\n')
+        canvas.itemconfig(text_display, state='hidden')
+        del(text_display)
+        text_display = canvas.create_text(20, 20, text=text_to_print, font=('Helvetica',14),\
+                        fill='green',state='normal', anchor=tk.NW)
+
+        i = 0
+        a = dict(sorted(session_activities.items(), key=lambda item: item[1], reverse=True))
+        list_to_display = ''
+        
+        for activity, activity_time in a.items():
+            seconds = activity_time % 60
+            minutes = activity_time // 60
+            hours = minutes // 60
+            minutes = minutes % 60
+            list_to_display = list_to_display + f'{hours:02}:{minutes:02}:{seconds:02}   {activity}\n'
+            i += 1
+            if i == 9:
+                break
+        canvas.itemconfig(list_display, state='hidden')
+        del(list_display)
+        list_display = canvas.create_text(20, 60, text=list_to_display, font=('Helvetica',14),\
+                        fill='black',state='normal', anchor=tk.NW)
+
+        if first_time:
             first_time = False
-        for i in range(20):
+        for _ in range(19):
             window.update()
             time.sleep(0.05)
         previous_activity = activity_name
