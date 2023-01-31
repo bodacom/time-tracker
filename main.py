@@ -1,4 +1,5 @@
 import tracker
+import analyzer
 
 
 
@@ -31,6 +32,7 @@ def create_project(projects: list) -> str:
 # elif mode.upper() == 'F':
 #     pass
 
+if __name__ == '__main__':
 
-while True:
-    timestamp, activity_details = tracker.light_tracker()
+    while True:
+        timestamp, activity_details = tracker.light_tracker()
