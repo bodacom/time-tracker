@@ -132,3 +132,4 @@ dmypy.json
 tracker_log*.txt
 *.json
 requirements.txt
+widget_log_*.txt

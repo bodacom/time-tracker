@@ -9,10 +9,11 @@
 
 import time
 import datetime
+import matplotlib.pyplot as plt 
 
 
 
-def read_log(log_file_name: str = 'tracker_log.txt') -> list:
+def read_log(log_file_name: str = '/home/bohdan/tracker_log.txt') -> list:
     '''
     Reads all the file content.
     Returns list containing lines.
@@ -220,13 +221,15 @@ def active_logged_intervals(entities: list, gap: float, sleep: float) -> list:
 
 if __name__ == '__main__':
 
-    file_name = input('Enter log file name: (d=default) ')
-    lines = read_log(file_name)
+    file_name = input('Enter log file name: (empty=default) ')
+    lines = read_log()
     
     log_entities = make_entities(lines)
     print('Number of log entities:',len(log_entities))
+    del(lines)
 
-    frequency_dictionary = sorted_frequency_dictionary(log_entities, False)
+    frequency_dictionary = sorted_frequency_dictionary(log_entities, True)
+    del(log_entities)
 
     # for entity in log_entities:
     #     # if entity[1] == '':
@@ -238,27 +241,40 @@ if __name__ == '__main__':
     #     except Exception:
     #         print(entity)
 
-    total = 0
-    for key, value in frequency_dictionary.items():
-        #print(str(datetime.timedelta(seconds = value)), key)
-        total += value
-        
+    total = sum(frequency_dictionary.values())
+    i = 0
+    names = []
+    times = []
+    for name, value in frequency_dictionary.items():
+        # print(str(datetime.timedelta(seconds = value)), key)
+        # total += value
+        if i < 10:
+            names.append(name)
+            times.append(value)
+        else:
+            break
+        i += 1
+
+    plt.pie(times, labels=names, startangle=240)
+    plt.show()
+
     #print(str(datetime.timedelta(seconds = telegram_time)), 'Total telegram time')
     #print(str(datetime.timedelta(seconds = mozilla_time)), 'Total mozilla time')
+    
     print('Total time: ',str(datetime.timedelta(seconds = total)))
     print('Tracking started: ', time.ctime(float(log_entities[0][0])))
     print('Last entity: ', time.ctime(float(log_entities[-1][0])))
 
-    intervals = logged_intervals(log_entities, 4)
-    print(len(intervals))
-    for index, interval in enumerate(intervals):
-        if index < 9:
-            index = ' ' + str(index + 1)
-        else:
-            index = str(index + 1)
-        print(index, time.strftime(' %d %H:%M  -  ',time.localtime(interval[0])),\
-              time.strftime('%d %H:%M : ',time.localtime(interval[1])),\
-              str(datetime.timedelta(seconds = interval[1] - interval[0])))
+    # intervals = logged_intervals(log_entities, 4)
+    # print(len(intervals))
+    # for index, interval in enumerate(intervals):
+    #     if index < 9:
+    #         index = ' ' + str(index + 1)
+    #     else:
+    #         index = str(index + 1)
+    #     print(index, time.strftime(' %d %H:%M  -  ',time.localtime(interval[0])),\
+    #           time.strftime('%d %H:%M : ',time.localtime(interval[1])),\
+    #           str(datetime.timedelta(seconds = interval[1] - interval[0])))
 
 
     # print(type(log_lines))

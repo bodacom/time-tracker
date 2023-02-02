@@ -9,9 +9,9 @@ from datetime import datetime
 
 
 
-def save_to_file(file: str, data: str):
+def save_to_file(file: str, data: str, mode: str = 'a') -> bool:
     try:
-        with open(file, 'a') as data_file:
+        with open(file, mode) as data_file:
             data_file.write(data)
         return True
     except:
