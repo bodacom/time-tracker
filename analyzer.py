@@ -229,17 +229,17 @@ if __name__ == '__main__':
     del(lines)
 
     frequency_dictionary = sorted_frequency_dictionary(log_entities, True)
-    del(log_entities)
+    # del(log_entities)
 
-    # for entity in log_entities:
-    #     # if entity[1] == '':
-    #     #     print(datetime.datetime.utcfromtimestamp(float(entity[0])).strftime('%Y-%m-%d %H:%M:%S'))
-    #     try:
-    #         float(entity[0])
-    #         if entity[1] == '':
-    #             print(datetime.datetime.utcfromtimestamp(float(entity[0])).strftime('%Y-%m-%d %H:%M:%S'))
-    #     except Exception:
-    #         print(entity)
+    for entity in log_entities:
+        # if entity[1] == '':
+        #     print(datetime.datetime.utcfromtimestamp(float(entity[0])).strftime('%Y-%m-%d %H:%M:%S'))
+        try:
+            float(entity[0])
+            if entity[1] == '':
+                print(datetime.datetime.utcfromtimestamp(float(entity[0])).strftime('%Y-%m-%d %H:%M:%S'))
+        except Exception:
+            print(entity)
 
     total = sum(frequency_dictionary.values())
     i = 0
@@ -265,16 +265,16 @@ if __name__ == '__main__':
     print('Tracking started: ', time.ctime(float(log_entities[0][0])))
     print('Last entity: ', time.ctime(float(log_entities[-1][0])))
 
-    # intervals = logged_intervals(log_entities, 4)
+    intervals = logged_intervals(log_entities, 4)
     # print(len(intervals))
-    # for index, interval in enumerate(intervals):
-    #     if index < 9:
-    #         index = ' ' + str(index + 1)
-    #     else:
-    #         index = str(index + 1)
-    #     print(index, time.strftime(' %d %H:%M  -  ',time.localtime(interval[0])),\
-    #           time.strftime('%d %H:%M : ',time.localtime(interval[1])),\
-    #           str(datetime.timedelta(seconds = interval[1] - interval[0])))
+    for index, interval in enumerate(intervals):
+        if index < 9:
+            index = ' ' + str(index + 1)
+        else:
+            index = str(index + 1)
+        print(index, time.strftime(' %d %H:%M  -  ',time.localtime(interval[0])),\
+              time.strftime('%d %H:%M : ',time.localtime(interval[1])),\
+              str(datetime.timedelta(seconds = interval[1] - interval[0])))
 
 
     # print(type(log_lines))
