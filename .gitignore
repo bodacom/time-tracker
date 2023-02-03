@@ -131,3 +131,5 @@ dmypy.json
 # Custom files for the project testing
 tracker_log*.txt
 *.json
+requirements.txt
+widget_log_*.txt
